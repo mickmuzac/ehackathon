@@ -14,8 +14,8 @@ module.exports = function(passport) {
     // Check for origin via state token
     if (req.query.state == req.session.state) {
       passport.authenticate('reddit', {
-        successRedirect: '/',
-        failureRedirect: '/login'
+        successRedirect: '/profile',
+        failureRedirect: '/error'
       })(req, res, next);
     } else {
       next(new Error(403));

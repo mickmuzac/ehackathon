@@ -39,9 +39,7 @@ passport.use(new RedditStrategy({
     })
     .success(function(user) {
       //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
-      if(user !== null) { 
-        console.log('Welcome Back: ', user);
-      } else {
+      if(user === null) {
         models.User.create({
           username: profile.name
         })
@@ -68,9 +66,11 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
+
+
 //session/auth stuff
 app.use(session({
-  secret: 'keyboard cat'
+  secret: config.sessionSecret
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -78,12 +78,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
 var routes = require('./routes/index');
-var login = require('./routes/login');
 var auth = require('./routes/authReddit.js')(passport);
+var profile = require('./routes/profile');
 
 app.use('/', routes);
-app.use('/login', login);
 app.use('/auth', auth);
+app.use('/profile', profile);
 
 app.get('/logout', function(req, res) {
   req.logout();
