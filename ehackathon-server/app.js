@@ -10,6 +10,7 @@ var RedditStrategy = require('passport-reddit').Strategy;
 var session = require('express-session');
 
 var config = require('./config.json');
+var models  = require('./models');
 
 //app
 var app = express();
@@ -30,9 +31,29 @@ passport.use(new RedditStrategy({
     clientID: config.redditKey,
     clientSecret: config.redditSecret,
     callbackURL: "http://localhost:3000/auth/reddit/callback",
-    scope: ['identity', 'mysubreddits']
+    scope: ['identity', 'mysubreddits'],
   },
   function(accessToken, refreshToken, profile, done) {
+    models.User.findOne({ 
+      where: {username: profile.name }
+    })
+    .success(function(user) {
+      //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
+      if(user !== null) { 
+        console.log('Welcome Back: ', user);
+      } else {
+        models.User.create({
+          username: profile.name
+        })
+        .then(function() {
+          console.log(profile.name + ' successfully registered!');
+        })
+      }
+      
+    })
+    .error(function(err) {
+      console.log(err);
+    });
     // asynchronous verification, for effect...
     process.nextTick(function() {
       return done(null, profile);
