@@ -17,6 +17,9 @@
     "node-sass-middleware": "0.8.0",
     "passport": "^0.2.2",
     "passport-reddit": "^0.2.4",
-    "serve-favicon": "~2.3.0"
+    "sequelize": "2.0.0-rc1",
+    "sequelize-cli": "^1.7.3",
+    "serve-favicon": "~2.3.0",
+    "sqlite3": "^3.0.9"
   }
 }

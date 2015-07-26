@@ -9,8 +9,9 @@ var passport = require('passport');
 var RedditStrategy = require('passport-reddit').Strategy;
 var session = require('express-session');
 
-var config = require('./config.json');
-var models  = require('./models');
+var env = process.env.NODE_ENV || 'development';
+var config = require('./config/config.json')[env];
+var models = require('./models');
 
 //app
 var app = express();
@@ -30,14 +31,15 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new RedditStrategy({
     clientID: config.redditKey,
     clientSecret: config.redditSecret,
-    callbackURL: "http://localhost:3000/auth/reddit/callback",
-    scope: ['identity', 'mysubreddits'],
+    callbackURL: config.redditCallback,
+    scope: ['identity', 'mysubreddits']
   },
   function(accessToken, refreshToken, profile, done) {
     models.User.findOne({ 
       where: {username: profile.name }
     })
     .success(function(user) {
+      console.log('success', user);
       //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
       if(user === null) {
         models.User.create({
