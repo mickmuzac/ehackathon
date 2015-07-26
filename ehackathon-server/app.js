@@ -38,7 +38,7 @@ passport.use(new RedditStrategy({
     models.User.findOne({ 
       where: {username: profile.name }
     })
-    .success(function(user) {
+    .then(function(user) {
       console.log('success', user);
       //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
       if(user === null) {
