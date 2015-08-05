@@ -35,21 +35,12 @@ passport.use(new RedditStrategy({
     scope: ['identity', 'mysubreddits']
   },
   function(accessToken, refreshToken, profile, done) {
-    models.User.findOne({ 
-      where: {username: profile.name }
+    models.User.findOrCreate({ 
+      where: {username: profile.name, EventId: 1 }
     })
     .then(function(user) {
       console.log('success', user);
       //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
-      if(user === null) {
-        models.User.create({
-          username: profile.name
-        })
-        .then(function() {
-          console.log(profile.name + ' successfully registered!');
-        })
-      }
-      
     })
     .error(function(err) {
       console.log(err);
@@ -82,10 +73,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 var routes = require('./routes/index');
 var auth = require('./routes/authReddit.js')(passport);
 var profile = require('./routes/profile');
+var teams = require('./routes/teams');
 
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/profile', profile);
+app.use('/teams', teams);
 
 app.get('/logout', function(req, res) {
   req.logout();

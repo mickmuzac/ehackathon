@@ -28,6 +28,7 @@ server.on('listening', onListening);
  */
 
 models.sequelize.sync().then(function () {
+  require('../seed')(models);
   server.listen(port);
 });
 
