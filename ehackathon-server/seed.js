@@ -1,11 +1,5 @@
-module.exports = function(db) {
-
-  db.Event.findOrCreate({
-    where: {
-      name: 'WeekendMVC'
-    }
-  }).then(function() {
-    console.log('Events seeded!');
-  });
-
+db.dropDatabase();
+var seedEvent ={
+  name:'WeekendMVC'
 };
+db.events.save(seedEvent);

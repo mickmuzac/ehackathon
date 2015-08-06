@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var RedditStrategy = require('passport-reddit').Strategy;
 var session = require('express-session');
+var mongoose = require('mongoose');
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/config.json')[env];
@@ -15,6 +16,15 @@ var models = require('./models');
 
 //app
 var app = express();
+
+var dbUrl = process.env.MONGOHQ_URL || 'mongodb://@127.0.0.1:27017/ehackathon';
+
+var connection = mongoose.createConnection(dbUrl);
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.once('open', function () {
+  console.info('Connected to database')
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,20 +45,19 @@ passport.use(new RedditStrategy({
     scope: ['identity', 'mysubreddits']
   },
   function(accessToken, refreshToken, profile, done) {
-    models.User.findOrCreate({ 
-      where: {username: profile.name, EventId: 1 }
-    })
-    .then(function(user) {
-      console.log('success', user);
-      //add extra criteria here to prevent gaming(registration date, maybe an api call to check if they belong to r/startups)
-    })
-    .error(function(err) {
-      console.log(err);
-    });
-    // asynchronous verification, for effect...
-    process.nextTick(function() {
-      return done(null, profile);
-    });
+
+    connection
+      .model('User', models.User, 'users')
+      .findOrCreate({
+        username: profile.name,
+      },
+      {
+        username: profile.name
+      }, function(err, user, created) {
+        process.nextTick(function() {
+          return done(null, user);
+        });
+      });
   }
 ));
 

@@ -1,4 +1,6 @@
 # Running Server
+Make sure you have mongo installed and started.
+
 Install dependencies and create config file:
 ```sh
 $ cd ehackathon-server
