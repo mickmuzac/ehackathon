@@ -25,7 +25,6 @@ connection.once('open', function () {
   console.info('Connected to database')
 });
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -45,15 +44,17 @@ passport.use(new RedditStrategy({
     scope: ['identity', 'mysubreddits']
   },
   function(accessToken, refreshToken, profile, done) {
-
     connection
       .model('User', models.User, 'users')
       .findOrCreate({
         username: profile.name,
-      },
-      {
-        username: profile.name
       }, function(err, user, created) {
+        if(created){
+          require('./models/dal').addUserToLatestEvent(user, function(err){
+            console.log("Result of adding user to event: ", err);
+          });
+        }
+
         process.nextTick(function() {
           return done(null, user);
         });
