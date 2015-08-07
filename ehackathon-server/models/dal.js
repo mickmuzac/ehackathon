@@ -6,6 +6,7 @@ var models = require('./index');
 //Declare models for use later
 var User;
 var Event;
+var Team;
 
 var dbUrl = process.env.MONGOHQ_URL || 'mongodb://@127.0.0.1:27017/ehackathon';
 
@@ -16,6 +17,7 @@ connection.once('open', function () {
   console.info('Connected to database');
   User = connection.model('User', models.User, 'users');
   Event = connection.model('Event', models.Event, 'events');
+  Team = connection.model('Team', models.Team, 'teams');
 });
 
 exports.addUserToLatestEvent = function(user, cb){
@@ -38,4 +40,8 @@ exports.getLatestEvent = function(cb){
 
 exports.findOrCreateUser = function(username, cb){
   User.findOrCreate({ 'username': username }, cb);
+}
+
+exports.findOrCreateTeam = function(team, cb) {
+  Team.findOrCreate({ ownerId: team.ownerId, eventId: team.eventId }, team, cb);
 }
