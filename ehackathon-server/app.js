@@ -37,6 +37,7 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+
 passport.use(new RedditStrategy({
     clientID: config.redditKey,
     clientSecret: config.redditSecret,
@@ -49,11 +50,12 @@ passport.use(new RedditStrategy({
       .findOrCreate({
         username: profile.name,
       }, function(err, user, created) {
-        if(created){
+        //if(created){
+          console.log("Calling addUserToLatestEvent from app.js");
           require('./models/dal').addUserToLatestEvent(user, function(err){
             console.log("Result of adding user to event: ", err);
           });
-        }
+        //}
 
         process.nextTick(function() {
           return done(null, user);
