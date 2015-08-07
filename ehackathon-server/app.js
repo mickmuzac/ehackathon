@@ -1,29 +1,20 @@
 //modules
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var RedditStrategy = require('passport-reddit').Strategy;
-var session = require('express-session');
-var mongoose = require('mongoose');
+var express = require('express'),
+  path = require('path'),
+  favicon = require('serve-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  passport = require('passport'),
+  RedditStrategy = require('passport-reddit').Strategy,
+  session = require('express-session');
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/config.json')[env];
-var models = require('./models');
+var dal = require('./models/dal');
 
 //app
 var app = express();
-
-var dbUrl = process.env.MONGOHQ_URL || 'mongodb://@127.0.0.1:27017/ehackathon';
-
-var connection = mongoose.createConnection(dbUrl);
-connection.on('error', console.error.bind(console, 'connection error:'));
-connection.once('open', function () {
-  console.info('Connected to database')
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +28,6 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
 passport.use(new RedditStrategy({
     clientID: config.redditKey,
     clientSecret: config.redditSecret,
@@ -45,17 +35,12 @@ passport.use(new RedditStrategy({
     scope: ['identity', 'mysubreddits']
   },
   function(accessToken, refreshToken, profile, done) {
-    connection
-      .model('User', models.User, 'users')
-      .findOrCreate({
-        username: profile.name,
-      }, function(err, user, created) {
-        //if(created){
-          console.log("Calling addUserToLatestEvent from app.js");
-          require('./models/dal').addUserToLatestEvent(user, function(err){
+    dal.findOrCreateUser(profile.name, function(err, user, created) {
+        if(created){
+          dal.addUserToLatestEvent(user, function(err){
             console.log("Result of adding user to event: ", err);
           });
-        //}
+        }
 
         process.nextTick(function() {
           return done(null, user);
