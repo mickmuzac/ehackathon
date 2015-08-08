@@ -3,6 +3,8 @@
 var mongoose = require('mongoose');
 var models = require('./index');
 
+var ObjectId = mongoose.Types.ObjectId;
+
 //Declare models for use later
 var User;
 var Event;
@@ -27,7 +29,7 @@ exports.addUserToLatestEvent = function(user, cb){
   var username = user.username;
   exports.getLatestEvent(function(err, doc){
     if(!err){
-      User.update({ 'username': username }, { '$push': { 'events':  doc._id } }, function(err){
+      User.update({ 'username': username }, { '$addToSet': { 'events':  doc._id } }, function(err){
         cb(err);
       });
     } else cb(err);
@@ -53,7 +55,13 @@ exports.findTeamsByMemberId = function(memberId, cb) {
 }
 
 exports.addUserToTeam = function(teamId, userId, cb) {
-  Team.update({_id: teamId}, { $push: { members: userId } }, cb);
+  console.log("Adding to team:", userId);
+
+  //Can't add current user to team if user is owner or if user is already on team
+  var condition = { '_id': teamId, ownerId: { '$ne': new ObjectId(userId) } };
+  var operation = { '$addToSet': { 'members': userId } };
+
+  Team.update(condition, operation, cb);
 }
 
 exports.findTeamByOwnerId = function(ownerId, cb) {
