@@ -7,6 +7,7 @@ var models = require('./index');
 var User;
 var Event;
 var Team;
+var TeamInvite;
 
 var dbUrl = process.env.MONGOHQ_URL || 'mongodb://@127.0.0.1:27017/ehackathon';
 
@@ -18,6 +19,7 @@ connection.once('open', function () {
   User = connection.model('User', models.User, 'users');
   Event = connection.model('Event', models.Event, 'events');
   Team = connection.model('Team', models.Team, 'teams');
+  TeamInvite = connection.model('TeamInvite', models.TeamInvite, 'teamInvites');
 });
 
 exports.addUserToLatestEvent = function(user, cb){
@@ -44,4 +46,28 @@ exports.findOrCreateUser = function(username, cb){
 
 exports.findOrCreateTeam = function(team, cb) {
   Team.findOrCreate({ ownerId: team.ownerId, eventId: team.eventId }, team, cb);
+}
+
+exports.findTeamsByMemberId = function(memberId, cb) {
+  Team.find({ users: memberId }, cb);
+}
+
+exports.addUserToTeam = function(teamId, userId, cb) {
+  Team.update({_id: teamId}, { $push: { members: userId } }, cb);
+}
+
+exports.findTeamByOwnerId = function(ownerId, cb) {
+  Team.findOne( { ownerId: ownerId }, cb);
+}
+
+exports.createTeamInvite = function(teamId, cb) {
+  TeamInvite.create( { teamId: teamId }, cb);
+}
+
+exports.deleteTeamInvite = function(inviteId, cb) {
+  TeamInvite.remove({ _id: inviteId }, cb);
+}
+
+exports.findCodeById = function(codeId, cb) {
+  TeamInvite.findById(codeId, cb);
 }

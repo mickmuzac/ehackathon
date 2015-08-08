@@ -67,6 +67,10 @@ var Team = new Schema({
     ref: 'Event',
     required: true
   },
+  members: [{
+    type: Schema.Types.ObjectId, 
+    ref: 'User'
+  }],
   created: {
     type: Date,
     default: Date.now,
@@ -77,10 +81,24 @@ var Team = new Schema({
     default: Date.now,
     required: true
   }
-})
+});
+
+var TeamInvite = new Schema({
+  teamId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Team',
+    required: true
+  },
+  redeemed: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
+});
 
 Team.plugin(findOrCreate);
 
 exports.User = User;
 exports.Event = Event;
 exports.Team = Team;
+exports.TeamInvite = TeamInvite;
