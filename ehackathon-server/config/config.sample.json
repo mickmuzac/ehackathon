@@ -3,18 +3,21 @@
     "redditKey": "",
     "redditSecret": "",
     "redditCallback": "http://localhost:3000/auth/reddit/callback",
-    "sessionSecret": ""
+    "sessionSecret": "",
+    "baseUrl": "localhost:3000/",
   },
   "test": {
     "redditKey": "",
     "redditSecret": "",
     "redditCallback": "http://localhost:3000/auth/reddit/callback",
-    "sessionSecret": ""
+    "sessionSecret": "",
+    "baseUrl": "localhost:3000/",
   },
   "production": {
     "redditKey": "",
     "redditSecret": "",
     "redditCallback": "http://localhost:3000/auth/reddit/callback",
-    "sessionSecret": ""
+    "sessionSecret": "",
+    "baseUrl": "localhost:3000/",
   }
 }
