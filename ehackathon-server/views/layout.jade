@@ -1,8 +1,50 @@
 doctype html
-html
+html.no-js(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title WkndMVP
+    link(rel='stylesheet', href='stylesheets/app.css')
+    link(rel='stylesheet', href='stylesheets/flipclock.css')
+    script(src='bower_components/modernizr/modernizr.js')
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js')
   body(ng-app="weekendmvp")
-    block content
+    div(ng-controller='BaseController')
+      .contain-to-grid.sticky(data-magellan-expedition='sticky')
+        nav.top-bar(data-topbar='', role='navigation')
+          ul.title-area
+            li.toggle-topbar.menu-icon
+              a(href='#')
+                span Menu
+          section
+            ul.right.nav-container
+              li
+                .nav-links
+                  a(href='#about-section', data-magellan-arrival='about-section') ABOUT
+                  |  :
+                  a(href='#ehackathon-section', data-magellan-arrival='ehackathon-section') eHACKATHON
+                  |  :
+                  a(href='#showcase-section', data-magellan-arrival='showcase-section') SHOWCASE
+                  |  :
+                  a(href='#contact-section', data-magellan-arrival='contact-section') CONTACT
+                  |  :
+                  a(href='/auth/reddit') LOGIN
+              li
+                #count-dwn-clk
+                  span#count-dwn-num-01.count-dwn-num 0
+                  span#count-dwn-num-02.count-dwn-num 0
+                  span#count-dwn-num-03.count-dwn-num 0
+                  span#count-dwn-num-04.count-dwn-num 0
+            ul.left
+              li
+                a(href='#start')
+                  img.wknd-logo(src='imgs/wknd-logo-small.png')
+      block content
+    
+    script(src='bower_components/jquery/dist/jquery.min.js')
+    script(src='bower_components/foundation/js/foundation.min.js')
+    script(src='bower_components/foundation/js/foundation/foundation.magellan.js')
+    script(src='js/flipclock.min.js')
+    script(src='js/workingmodel.js')
+    script(src='js/app.js')
+    block scripts
