@@ -17,34 +17,6 @@ router.get('/create', ensureAuthenticated, function(req, res, next) {
   })
 })
 
-router.post('/create', ensureAuthenticated, function(req, res, next) {
-  //TODO: Validation and stuff
-  dal.getLatestEvent(function(err, doc) {
-    var team = {
-      ownerId: req.user._id,
-      title: req.body.title,
-      description: req.body.description,
-      eventId: doc._id
-    };
-    dal.findOrCreateTeam(team, function(err, doc, created) {
-      if(created) {
-        res.render('teams_created', {
-          team: doc
-        });
-      } else {
-        res.render('error',{
-          message: 'You\'ve already created a team!',
-          error: {
-            status: 409,
-            stack: ''
-          }
-        });
-      }
-
-    })
-  })
-});
-
 router.get('/invite/code', ensureAuthenticated, function(req, res, next) {
   var team = dal.findTeamByOwnerId(req.user._id, function(err, doc) {
     if(doc !== null) {
