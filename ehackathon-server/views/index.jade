@@ -38,49 +38,36 @@ block content
 
       p(ng-show="!user.username && !team.title")
         | You need to #[a(href='/auth/reddit') register/login] to create a team.
-      form(data-abide='', ng-show="user.username && !team.title")
+      form(data-abide='', ng-show="user.username && !team.title", ng-submit="registerTeam(teamRegister)")
         .team-name-field
           label
             | Your Team Name 
             small required
-            input(type='text', required='', pattern='[a-zA-Z]+')
+            input(type='text', required='', ng-model='teamRegister.title')
           small.error Team name is required.
         .email-field
           label
             | Contact Email 
             small required
-            input(type='email', required='')
+            input(type='email', required='', ng-model='teamRegister.email')
           small.error An email address is required.
         .member-field
           label
             | Team Lead 
             small required
-            input(type='text', required='', pattern='[a-zA-Z]+')
+            input(type='text', readonly, ng-value='user.username', disabled)
           small.error Name is required.
-        //
-          <div class="member-field">
-          <label>Team Member <small>required</small>
-          <input type="text" required pattern="[a-zA-Z]+">
-          </label>
-          <small class="error">Name is required.</small>
-          </div>
-          <div class="member-field">
-          <label>Team Member <small>required</small>
-          <input type="text" required pattern="[a-zA-Z]+">
-          </label>
-          <small class="error">Name is required.</small>
-          </div>
-        label
-          | Choose a Category
-          select
-            option(value='overall') Best Overall
-            option(value='mobile') Best Mobile
-            option(value='internet') Best Internet of Things
-            option(value='ux') Best UX
-            option(value='api') Best use of an API
+        //- label
+        //-   | Choose a Category
+        //-   select
+        //-     option(value='overall') Best Overall
+        //-     option(value='mobile') Best Mobile
+        //-     option(value='internet') Best Internet of Things
+        //-     option(value='ux') Best UX
+        //-     option(value='api') Best use of an API
         label
           | Project Description
-          textarea
+          textarea(required, ng-model='teamRegister.description')
         button(type='submit') Submit
         button(type='reset') Reset
       h3 Date & Duration

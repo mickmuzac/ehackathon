@@ -4,4 +4,8 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
   console.log(weekendMVPConfig.currentUser);
   $scope.user = weekendMVPConfig.currentUser;
   $scope.team = weekendMVPConfig.currentUserTeam;
+
+  $scope.registerTeam = function(team) {
+    console.log('REGISTER', team);
+  }
 }]);
