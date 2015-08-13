@@ -9,7 +9,9 @@ block content
           span.red-copy Thurs Aug 2 @ 12:00 PST
         h3 Register your team today
         .countdown-timer
-        a.button.large(href='#ehackathon-section', ng-hide='username') Register Now
+        a.button.large(href='#ehackathon-section', ng-hide='user.username') Register Now
+        p(ng-show='user.username')
+          | Welcome {{::user.username}}
   #about-section.row.landing-callout(data-magellan-destination='about-section')
     .small-12.columns
       h2.landing-callout-copy About WkndMVP
@@ -30,8 +32,13 @@ block content
           | Register your team before 
           span.red-copy.bold-copy Thurs Aug 2 @ 12:00 PST
           | .
-      h3 Team Registration 
-      form(data-abide='')
+      h3 Team Registration
+      p(ng-show="user.username && team.title")
+        | Looks like you already belong to <strong>{{::team.title}}</strong>!
+
+      p(ng-show="!user.username && !team.title")
+        | You need to #[a(href='/auth/reddit') register/login] to create a team.
+      form(data-abide='', ng-show="user.username && !team.title")
         .team-name-field
           label
             | Your Team Name 
@@ -160,5 +167,6 @@ block scripts
     script.
       angular.module('weekendmvp.config', [])
         .constant('weekendMVPConfig', {
-          currentUser: !{JSON.stringify(user)}
+          currentUser: !{JSON.stringify(user)},
+          currentUserTeam: !{JSON.stringify(team)}
         });
