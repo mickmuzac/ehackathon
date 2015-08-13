@@ -1,8 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p 
-    a(href='/teams/create') Create a team!
-  p= teams
+  div(ng-controller="BaseController")
+    h1= title
+    p 
+      a(href='/teams/create') Create a team!
+    
+    script(src="/js/app.js")
     
