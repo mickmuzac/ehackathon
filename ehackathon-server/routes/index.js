@@ -5,7 +5,9 @@ var dal = require('../models/dal');
 
 router.get('/', function(req, res, next) {
   if(req.user) {
+    console.log(req.user._id);
     dal.findTeamsByMemberId(req.user._id, function(err, docs) {
+      console.log(docs);
       res.render('index', { user: req.user, team: docs[0] ? docs[0] : {} });
     });
   } else {

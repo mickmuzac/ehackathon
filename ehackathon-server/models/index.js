@@ -57,6 +57,10 @@ var Team = new Schema({
     required: true,
     type: String
   },
+  email: {
+    required: true,
+    type: String
+  },
   ownerId: {
     type: Schema.Types.ObjectId, 
     ref: 'User',
@@ -71,6 +75,7 @@ var Team = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'User'
   }],
+
   created: {
     type: Date,
     default: Date.now,
