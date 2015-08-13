@@ -1,9 +1,7 @@
-var app = angular.module("weekendmvp", []);
+var app = angular.module("weekendmvp", ['weekendmvp.config']);
 
-app.controller("BaseController", ['$scope', '$http', function($scope, $http){
-  //Add fundamental stuff to app here...
-  $scope.myTeams;
-  $http.get('/teams/...') // <--- delete me or entire file
-
-
+app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', function($scope, $http, weekendMVPConfig){
+  console.log(weekendMVPConfig.currentUser);
+  $scope.user = weekendMVPConfig.currentUser;
+  $scope.team = weekendMVPConfig.currentUserTeam;
 }]);

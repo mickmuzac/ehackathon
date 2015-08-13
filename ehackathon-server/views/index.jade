@@ -1,7 +1,172 @@
 extends layout
-
 block content
-  h1= title
-  p 
-    a(href='/auth/reddit') Login/Register!
-  
+  #start.row.landing-hero
+    .small-12.columns
+      .content-container
+        h1 Join the WkndMVP eHackathon
+        h2
+          | Hacking starts: 
+          span.red-copy Thurs Aug 2 @ 12:00 PST
+        h3 Register your team today
+        .countdown-timer
+        a.button.large(href='#ehackathon-section', ng-hide='user.username') Register Now
+        p(ng-show='user.username')
+          | Welcome {{::user.username}}
+  #about-section.row.landing-callout(data-magellan-destination='about-section')
+    .small-12.columns
+      h2.landing-callout-copy About WkndMVP
+  .row.landing-categories.cat-bkg01
+    .small-12.medium-7.columns
+      h3 A Community for Makers
+      p
+        | WkndMVP is a community for makers that was founded by the r/startup Reddit community. WkndMVP is about bringing our complementary skills together over the weekends to do what we love - create new, smart things.
+  #ehackathon-section.row.landing-callout(data-magellan-destination='ehackathon-section')
+    .small-12.columns
+      h2.landing-callout-copy eHackathon
+  .row.landing-categories.cat-bkg02
+    .small-12.medium-7.columns
+      h3 How to Participate 
+      ol
+        li Find teammates in the /weekendMVP subreddit
+        li
+          | Register your team before 
+          span.red-copy.bold-copy Thurs Aug 2 @ 12:00 PST
+          | .
+      h3 Team Registration
+      p(ng-show="user.username && team.title")
+        | Looks like you already belong to <strong>{{::team.title}}</strong>!
+
+      p(ng-show="!user.username && !team.title")
+        | You need to #[a(href='/auth/reddit') register/login] to create a team.
+      form(data-abide='', ng-show="user.username && !team.title")
+        .team-name-field
+          label
+            | Your Team Name 
+            small required
+            input(type='text', required='', pattern='[a-zA-Z]+')
+          small.error Team name is required.
+        .email-field
+          label
+            | Contact Email 
+            small required
+            input(type='email', required='')
+          small.error An email address is required.
+        .member-field
+          label
+            | Team Lead 
+            small required
+            input(type='text', required='', pattern='[a-zA-Z]+')
+          small.error Name is required.
+        //
+          <div class="member-field">
+          <label>Team Member <small>required</small>
+          <input type="text" required pattern="[a-zA-Z]+">
+          </label>
+          <small class="error">Name is required.</small>
+          </div>
+          <div class="member-field">
+          <label>Team Member <small>required</small>
+          <input type="text" required pattern="[a-zA-Z]+">
+          </label>
+          <small class="error">Name is required.</small>
+          </div>
+        label
+          | Choose a Category
+          select
+            option(value='overall') Best Overall
+            option(value='mobile') Best Mobile
+            option(value='internet') Best Internet of Things
+            option(value='ux') Best UX
+            option(value='api') Best use of an API
+        label
+          | Project Description
+          textarea
+        button(type='submit') Submit
+        button(type='reset') Reset
+      h3 Date & Duration
+      p The eHackathon starts:
+      p
+      p.red-copy.bold-copy Thurs Aug 2 @ 12:00 PST & runs until Sun, Aug 23 @ 23:59 PST
+      p
+        | Submission must be entered online no later than 
+        span.red-copy.bold-copy Sun, Aug 23 @ 23:59 PST
+        | .
+      h3 Submission
+      p
+        | Team leaders log in at wkndmvp.com and submit your team project before the deadline 
+        span.red-copy.bold-copy Sun, Aug 23 @ 23:59 PST.
+      h3 Voting
+      ol
+        li
+          | After the eHackathon deadline Community reviews submissions & choose best of or 1/2/3 for each category.
+        li 1 week for community to vote
+        li Voters sign in with reddit to cast vote, 1 vote per username per category? 
+        li Voters cannot vote on their own project
+        li Account must be 1 week old from the start of hackathon
+        li Account must belong to r startups subreddit
+    .small-8.medium-6.columns
+      h3 Categories
+      p
+        | Below is a list of the categories to inspire your ideas. If our community is able to gain enough traction that we attract sponsors for the WkndMVP eHackathon, we hope to provide prizes for the following categories. At minimum, your team could win all the fame, glory and bragging rights for the categories below.
+      p Voting will open after the eHackathon deadline on Sun, Aug 23 @ 23:59 PST. 
+      p
+        | Voting is open to members of the r/startups Reddit community. Login on Mon, Aug 25th to cast your vote for the best of the best in each category.
+    .small-8.medium-6.columns
+      ul.category-list
+        li
+          img(src='imgs/blue-3dpolybox.png')
+          |  Best Overall
+        li
+          img(src='imgs/red-3dpolybox.png')
+          |  Best Mobile
+        li
+          img(src='imgs/blue-3dpolybox.png')
+          |  Best Internet of Things
+        li
+          img(src='imgs/red-3dpolybox.png')
+          |  Best UX
+        li
+          img(src='imgs/blue-3dpolybox.png')
+          |  Best use of an API
+  #showcase-section.row.landing-callout(data-magellan-destination='showcase-section')
+    .small-12.columns
+      h2.landing-callout-copy Showcase
+  .row.landing-categories.cat-bkg03
+    .small-12.medium-7.columns
+      h3 Coming soon!
+      p
+        | Check back on August 25th,2015 to cast your vote for the best projects in each category.
+  #contact-section.row.landing-callout(data-magellan-destination='contact-section')
+    .small-12.columns
+      h2.landing-callout-copy Contact WkndMVP
+  .row.landing-categories.cat-bkg04
+    .small-12.medium-7.columns
+      form(data-abide='')
+        .team-name-field
+          label
+            | Name 
+            small required
+            input(type='text', required='', pattern='[a-zA-Z]+')
+          small.error Name is required.
+        .email-field
+          label
+            | Email 
+            small required
+            input(type='email', required='')
+          small.error An email address is required.
+        .member-field
+          label
+            | Company
+            input(type='text')
+        label
+          | What's up?
+          textarea
+        button(type='submit') Submit
+        button(type='reset') Reset
+block scripts
+    script.
+      angular.module('weekendmvp.config', [])
+        .constant('weekendMVPConfig', {
+          currentUser: !{JSON.stringify(user)},
+          currentUserTeam: !{JSON.stringify(team)}
+        });

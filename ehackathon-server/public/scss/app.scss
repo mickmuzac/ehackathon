@@ -1,0 +1,159 @@
+@import "settings";
+@import "foundation";
+
+@font-face {
+  font-family: 'Gotham Black';
+  src: url('../fonts/Gotham-Black.otf');
+}
+@font-face {
+  font-family: 'Gotham Book';
+  src: url('../fonts/Gotham-Book.otf');
+}
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('../fonts/Gotham-Light.otf');
+}
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('../fonts/Gotham-Medium.otf');
+}
+
+$red: #ff0000;
+$blue: #00ffff;
+$white: #FFFFFF;
+$black: #000000;
+
+$container-padding: rem-calc(44);
+
+body{
+  font-family: 'Gotham Book', serif;
+}
+h1, h2, h3, h4, h5{
+  font-family: 'Gotham Black', serif;
+}
+h1{
+  //color:#ff0000;
+}
+.active{
+  //text-decoration: underline;
+  color:$red;
+}
+.red-copy{
+  color:$red;
+}
+.bold-copy{
+  font-family: 'Gotham Black', serif;
+}
+.wknd-logo{
+  padding:22px 0 0 44px;
+}
+.nav-links{
+  margin:16px 22px 0 0;
+  font-family: 'Gotham Black', serif;
+}
+.nav-container{
+  display:inline-flex !important;
+  padding:22px 44px 0 0;
+}
+#count-dwn-clk{
+  position:relative;
+  height:46px;
+  width:170px;
+  background-image: url('../imgs/clock-bkgrd.png');
+  background-repeat:no-repeat;
+}
+.count-dwn-num{
+  font-size: 32px;
+  font-family: 'Gotham Black', serif;
+}
+#count-dwn-num-01{
+  position:absolute;
+  top:0px;
+  left:8px;
+}
+#count-dwn-num-02{
+  position:absolute;
+  top:0px;
+  left:47.5px;
+}
+#count-dwn-num-03{
+  position:absolute;
+  top:0px;
+  left:100px;
+}
+#count-dwn-num-04{
+  position:absolute;
+  top:0px;
+  left:140px;
+}
+.landing-hero{
+  position:relative;
+  height:auto;
+  width:100%;
+  background-color:$blue;
+  background-image: url('../imgs/blue-group-stickies.jpg');
+  padding:$container-padding;
+}
+.content-container{
+  height:auto;
+  //width:80%;
+  padding:$container-padding;
+  background-color:rgba(250, 250, 250, 0.6);
+  // background-image: url('../imgs/white-halfpoly.png');
+  // background-repeat:no-repeat;
+  // background-position:center bottom;
+  // background-size: cover;
+}
+.landing-callout{
+  //height:120px;
+  padding:22px 44px;
+  background-color:$red;
+}
+.landing-categories{
+  //height:600px;
+  background-color:#ededed;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding:$container-padding;
+}
+.countdown-timer{
+  margin:32px 0 !important;
+}
+.cat-bkg01{
+  background-image: url('../imgs/dude-group-working.jpg');
+}
+.cat-bkg02{
+  background-image: url('../imgs/dude-whiteboard-1.jpg');
+}
+.cat-bkg03{
+  background-image: url('../imgs/dude-whiteboard-2.jpg');
+}
+.cat-bkg04{
+  background-image: url('../imgs/blue-group-working-2.jpg');
+}
+
+.footer{
+  height:300px;
+  background-color:#000000;
+}
+.landing-callout-copy{
+  color:#FFF;
+  //font-size: rem-calc(25);
+}
+.top-bar-section{
+  padding:22px !important;
+}
+.top-bar-section ul li{
+  background-color: $white !important;
+}
+.category-list{
+  list-style: none;
+  margin: 60px 0 40px 20px;
+  font-family: 'Gotham Medium', serif;
+}
+.category-list li{
+  margin:-10px;
+  padding:0px;
+
+}

@@ -1,0 +1,17 @@
+{
+  "name": "ehackathon-server",
+  "version": "0.0.0",
+  "homepage": "https://github.com/j--w/ehackathon",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "foundation": "~5.5.2"
+  }
+}
