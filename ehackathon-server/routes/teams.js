@@ -4,8 +4,11 @@ var ensureAuthenticated = require('../middleware/ensureAuthenticated');
 var dal = require('../models/dal');
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  res.render('teams', {
-    title: 'Teams'
+  dal.findTeamsByMemberId(req.user._id, function(err, doc){
+    res.render('teams', {
+      title: 'Teams',
+      teams: doc
+    });
   });
 });
 
@@ -38,7 +41,7 @@ router.post('/create', ensureAuthenticated, function(req, res, next) {
           }
         });
       }
-      
+
     })
   })
 });
@@ -61,7 +64,7 @@ router.get('/invite/code', ensureAuthenticated, function(req, res, next) {
 
 router.get('/invite/redeem/:codeId', ensureAuthenticated, function(req, res, next) {
   //TODO: Add validation(does user already belong to/own team etc..., clean up the nestedness
-  var code = dal.findCodeById(req.query.codeId, function(err, doc) {
+  var code = dal.findInviteById(req.query.codeId, function(err, doc) {
     if(err === null && doc !== null) {
 
       dal.addUserToTeam(doc.teamId, req.user._id, function(err, doc) {
@@ -80,7 +83,7 @@ router.get('/invite/redeem/:codeId', ensureAuthenticated, function(req, res, nex
             error: err
           });
         }
-        
+
       })
     } else {
       res.render('error',{

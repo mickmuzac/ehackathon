@@ -37,21 +37,33 @@ exports.addUserToLatestEvent = function(user, cb){
 
 }
 
+/*
+  Events
+*/
+
 exports.getLatestEvent = function(cb){
   console.log("Called within getLatestEvent function");
   Event.findOne({}, {}, { sort : { created: -1 } }, cb);
 }
 
+/*
+  Users
+*/
+
 exports.findOrCreateUser = function(username, cb){
   User.findOrCreate({ 'username': username }, cb);
 }
+
+/*
+  Teams
+*/
 
 exports.findOrCreateTeam = function(team, cb) {
   Team.findOrCreate({ ownerId: team.ownerId, eventId: team.eventId }, team, cb);
 }
 
 exports.findTeamsByMemberId = function(memberId, cb) {
-  Team.find({ users: memberId }, cb);
+  Team.find({ members: memberId }, cb);
 }
 
 exports.addUserToTeam = function(teamId, userId, cb) {
@@ -68,6 +80,10 @@ exports.findTeamByOwnerId = function(ownerId, cb) {
   Team.findOne( { ownerId: ownerId }, cb);
 }
 
+/*
+  Team Invites
+*/
+
 exports.createTeamInvite = function(teamId, cb) {
   TeamInvite.create( { teamId: teamId }, cb);
 }
@@ -76,6 +92,6 @@ exports.deleteTeamInvite = function(inviteId, cb) {
   TeamInvite.remove({ _id: inviteId }, cb);
 }
 
-exports.findCodeById = function(codeId, cb) {
+exports.findInviteById = function(codeId, cb) {
   TeamInvite.findById(codeId, cb);
 }
