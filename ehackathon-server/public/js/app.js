@@ -4,4 +4,14 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
   console.log(weekendMVPConfig.currentUser);
   $scope.user = weekendMVPConfig.currentUser;
   $scope.team = weekendMVPConfig.currentUserTeam;
+  console.log($scope.team);
+
+  $scope.registerTeam = function(team) {
+    //add some more validation here
+    $http.post('/api/v1/teams/create', team)
+      .success(function(doc) {
+        console.log(doc);
+        $scope.team = doc;
+      })
+  }
 }]);

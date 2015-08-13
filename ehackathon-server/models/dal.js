@@ -63,7 +63,7 @@ exports.findOrCreateTeam = function(team, cb) {
 }
 
 exports.findTeamsByMemberId = function(memberId, cb) {
-  Team.find({ members: memberId }, cb);
+  Team.find({$or:[{ members: memberId }, { ownerId: memberId }]}, cb);
 }
 
 exports.addUserToTeam = function(teamId, userId, cb) {

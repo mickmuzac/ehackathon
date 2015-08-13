@@ -22,6 +22,7 @@ router.post('/teams/create', ensureAuthenticated, function(req, res, next) {
       ownerId: req.user._id,
       title: req.body.title,
       description: req.body.description,
+      email: req.body.email,
       eventId: doc._id
     };
     dal.findOrCreateTeam(team, function(err, doc, created) {
