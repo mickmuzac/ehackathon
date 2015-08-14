@@ -1,10 +1,9 @@
 var app = angular.module("weekendmvp", ['weekendmvp.config']);
 
 app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', function($scope, $http, weekendMVPConfig){
-  console.log(weekendMVPConfig.currentUser);
   $scope.user = weekendMVPConfig.currentUser;
   $scope.team = weekendMVPConfig.currentUserTeam;
-  console.log($scope.team);
+  $scope.team.fullMembers = weekendMVPConfig.currentUserTeamMembers;
 
   $scope.registerTeam = function(team) {
     //add some more validation here
@@ -15,3 +14,20 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
       })
   }
 }]);
+
+app.directive('invite', function() {
+  return {
+    template: '<button ng-hide="inviteUrl || loading" ng-click="getLink()">Generate Invite Link</button><input ng-show="inviteUrl && !loading" type="text" ng-value="inviteUrl" onclick="this.select()">',
+    scope: {},
+    controller: ['$scope', '$http', function($scope, $http) {
+      $scope.getLink = function() {
+        $scope.loading = true;
+        $http.get('/api/v1/teams/invite/code')
+          .success(function(doc) {
+            $scope.loading = false
+            $scope.inviteUrl = doc.inviteUrl;
+          });
+      }
+    }]
+  }
+});

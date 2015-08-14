@@ -54,6 +54,15 @@ exports.findOrCreateUser = function(username, cb){
   User.findOrCreate({ 'username': username }, cb);
 }
 
+exports.findTeamMembers = function(teamId, cb) {
+  Team.findOne({_id: teamId}, function(err, doc) {
+    var team = doc;
+    team.members.push(team.ownerId);
+    User.find({_id: { $in: doc.members }}, cb);
+
+  });
+}
+
 /*
   Teams
 */

@@ -11,6 +11,7 @@ module.exports = function(passport) {
   });
 
   router.get('/reddit/callback', function(req, res, next) {
+    console.log(req);
     // Check for origin via state token
     if (req.query.state == req.session.state) {
       passport.authenticate('reddit', {
