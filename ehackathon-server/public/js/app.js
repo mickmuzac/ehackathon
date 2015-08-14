@@ -25,8 +25,7 @@ app.directive('invite', function() {
         $http.get('/api/v1/teams/invite/code')
           .success(function(doc) {
             $scope.loading = false
-            console.log(doc);
-            $scope.inviteUrl = 'http://localhost:3000/api/v1/teams/invite/redeem/' + doc._id;
+            $scope.inviteUrl = doc.inviteUrl;
           });
       }
     }]

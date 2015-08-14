@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var ensureAuthenticated = require('../../middleware/ensureAuthenticated');
 var dal = require('../../models/dal');
+var env = process.env.NODE_ENV || 'development';
+var config = require('../../config/config.json')[env];
 
 router.get('/teams', ensureAuthenticated, function(req, res, next) {
   dal.findTeamsByMemberId(req.user._id, function(err, doc){
@@ -43,7 +45,7 @@ router.get('/teams/invite/code', ensureAuthenticated, function(req, res, next) {
     if(doc !== null) {
       dal.createTeamInvite(doc._id, function(err, doc) {
         if(doc !== null) {
-          res.send(200, doc);
+          res.send(200, { inviteUrl: config.baseUrl + '/teams/invite/redeem/' + doc._id });
         } else {
           res.send(400);
         }
