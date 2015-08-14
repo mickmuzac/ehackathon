@@ -63,7 +63,7 @@ router.get('/teams/invite/redeem/:codeId', ensureAuthenticated, function(req, re
         if(err === null) {
           dal.deleteTeamInvite(req.query.codeId, function(err) {
             if(err === null) {
-              res.send(200);
+              res.redirect('/');
             } else {
               res.send(500, err);
             }

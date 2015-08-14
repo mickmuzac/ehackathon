@@ -33,8 +33,21 @@ block content
           span.red-copy.bold-copy Thurs Aug 2 @ 12:00 PST
           | .
       h3 Team Registration
-      p(ng-show="user.username && team.title")
-        | Looks like you already belong to <strong>{{::team.title}}</strong>!
+      div(ng-show="user.username && team.title")
+        h4 Your Team
+        p 
+          span.red-copy.bold-copy Name: 
+          | {{::team.title}}
+        p
+          span.red-copy.bold-copy Members:
+        ul
+          li(ng-repeat="member in team.fullMembers")
+            | {{::member.username}} 
+            span(ng-show="member._id === team.ownerId")
+              | (Moderator)
+          li(ng-show="user._id === team.ownerId")
+            invite
+
 
       p(ng-show="!user.username && !team.title")
         | You need to #[a(href='/auth/reddit') register/login] to create a team.
@@ -155,5 +168,6 @@ block scripts
       angular.module('weekendmvp.config', [])
         .constant('weekendMVPConfig', {
           currentUser: !{JSON.stringify(user)},
-          currentUserTeam: !{JSON.stringify(team)}
+          currentUserTeam: !{JSON.stringify(team)},
+          currentUserTeamMembers: !{JSON.stringify(teamMembers)}
         });
