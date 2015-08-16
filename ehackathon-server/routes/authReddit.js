@@ -16,7 +16,7 @@ module.exports = function(passport) {
     if (req.query.state == req.session.state) {
       var redirect = req.session.redirect || '/';
       req.session.redirect = null;
-      
+
       passport.authenticate('reddit', {
         successRedirect: redirect,
         failureRedirect: '/error'
@@ -25,5 +25,13 @@ module.exports = function(passport) {
       next(new Error(403));
     }
   });
+
+  router.get('/logout', function(req, res){
+    req.logout();
+    req.session.destroy(function(err){
+      res.redirect('/');
+    });
+  });
+
   return router;
 }
