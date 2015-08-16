@@ -2,6 +2,7 @@
 //the only file needing an update
 var mongoose = require('mongoose');
 var models = require('./index');
+var connectMongo = require('connect-mongo');
 
 var ObjectId = mongoose.Types.ObjectId;
 
@@ -23,6 +24,11 @@ connection.once('open', function () {
   Team = connection.model('Team', models.Team, 'teams');
   TeamInvite = connection.model('TeamInvite', models.TeamInvite, 'teamInvites');
 });
+
+exports.createSessionStore = function(sessionObj){
+  var MongoStore = connectMongo(sessionObj);
+  return new MongoStore({mongooseConnection: connection});
+}
 
 exports.addUserToLatestEvent = function(user, cb){
   //async.js would be pretty nice here.. heh.
