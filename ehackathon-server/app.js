@@ -60,7 +60,8 @@ app.use(cookieParser());
 
 //session/auth stuff
 app.use(session({
-  secret: config.sessionSecret
+  secret: config.sessionSecret,
+  redirect: null
 }));
 app.use(passport.initialize());
 app.use(passport.session());
