@@ -11,16 +11,27 @@ module.exports = function(passport) {
   });
 
   router.get('/reddit/callback', function(req, res, next) {
-    console.log(req);
+    //console.log(req);
     // Check for origin via state token
     if (req.query.state == req.session.state) {
+      var redirect = req.session.redirect || '/';
+      req.session.redirect = null;
+
       passport.authenticate('reddit', {
-        successRedirect: '/',
+        successRedirect: redirect,
         failureRedirect: '/error'
       })(req, res, next);
     } else {
       next(new Error(403));
     }
   });
+
+  router.get('/logout', function(req, res){
+    req.logout();
+    req.session.destroy(function(err){
+      res.redirect('/');
+    });
+  });
+
   return router;
 }

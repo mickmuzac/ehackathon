@@ -60,7 +60,9 @@ app.use(cookieParser());
 
 //session/auth stuff
 app.use(session({
-  secret: config.sessionSecret
+  secret: config.sessionSecret,
+  redirect: null,
+  store: dal.createSessionStore(session)
 }));
 app.use(passport.initialize());
 app.use(passport.session());
