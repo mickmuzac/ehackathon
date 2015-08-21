@@ -71,13 +71,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 var routes = require('./routes/index');
 var auth = require('./routes/authReddit.js')(passport);
-var profile = require('./routes/profile');
 var teams = require('./routes/teams');
 var api = require('./routes/api/api.v1.js');
 
 app.use('/', routes);
 app.use('/auth', auth);
-app.use('/profile', profile);
 app.use('/teams', teams);
 app.use('/api/v1', api);
 
