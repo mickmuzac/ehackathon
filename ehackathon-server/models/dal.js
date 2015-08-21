@@ -95,12 +95,20 @@ exports.findTeamByOwnerId = function(ownerId, cb) {
   Team.findOne( { ownerId: ownerId }, cb);
 }
 
+exports.deleteTeam = function(teamId, cb) {
+  Team.remove({ _id: teamId }, cb);
+}
+
 /*
   Team Invites
 */
 
 exports.createTeamInvite = function(teamId, cb) {
   TeamInvite.create( { teamId: teamId }, cb);
+}
+
+exports.deleteTeamInvitesByTeamId = function(teamId, cb) {
+  TeamInvite.remove({ teamId: teamId }, cb);
 }
 
 exports.deleteTeamInvite = function(inviteId, cb) {
