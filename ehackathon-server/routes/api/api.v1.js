@@ -1,5 +1,6 @@
 var accept = {
-  teams: require('./teams.js')
+  teams: require('./teams.js'),
+  contact: require('./contact.js')
 }
 
 module.exports = function (req, res, next){

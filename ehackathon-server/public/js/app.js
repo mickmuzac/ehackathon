@@ -5,13 +5,44 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
   $scope.team = weekendMVPConfig.currentUserTeam;
   $scope.team.fullMembers = weekendMVPConfig.currentUserTeamMembers;
 
-  $scope.registerTeam = function(team) {
+  $scope.registerTeam = function(isValid) {
+    if(isValid) {
+      $scope.teamLoading = true;
     //add some more validation here
-    $http.post('/api/v1/teams/create', team)
+    $http.post('/api/v1/teams/create', $scope.teamRegister)
       .success(function(doc) {
-        console.log(doc);
+        $scope.teamLoading = false;
         $scope.team = doc;
       })
+      .error(function() {
+        $scope.teamLoading = false;
+        $scope.teamError = true;
+      });
+    } else {
+      $scope.teamError = false;
+    }
+    
+  }
+
+  $scope.sendContact = function(isValid) {
+    if(isValid) {
+      $scope.contactLoading = true;
+      $scope.contactLoaded = false;
+      $scope.contactError = false;
+      $http.post('/api/v1/contact', $scope.contact)
+        .success(function() {
+          $scope.contactLoaded = true;
+          $scope.contactLoading = false;
+          $scope.contact = {};
+        })
+        .error(function() {
+          $scope.contactLoading = false;
+          $scope.contactLoaded = true;
+          $scope.contactError = true;
+        })  
+    } else {
+      $scope.contactError = true;
+    }
   }
 }]);
 

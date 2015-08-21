@@ -13,6 +13,7 @@
     "express": "~4.13.1",
     "express-session": "^1.11.3",
     "jade": "~1.11.0",
+    "mandrill-api": "^1.0.45",
     "mongoose": "^4.1.1",
     "mongoose-findorcreate": "^0.1.2",
     "mongoose-validator": "^1.2.3",

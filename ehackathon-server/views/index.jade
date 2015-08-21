@@ -10,8 +10,10 @@ block content
         h3 Register your team today
         .countdown-timer
         a.button.large(href='#ehackathon-section', ng-hide='user.username') Register Now
-        p(ng-show='user.username')
-          | Welcome {{::user.username}}
+        h3(ng-show='user.username')
+          | Welcome 
+          span(class='red-copy')
+            | {{::user.username}}
   #about-section.row.landing-callout(data-magellan-destination='about-section')
     .small-12.columns
       h2.landing-callout-copy About WkndMVP
@@ -49,40 +51,37 @@ block content
             invite
 
 
-      p(ng-show="!user.username && !team.title")
-        | You need to #[a(href='/auth/reddit') register/login] to create a team.
-      form(data-abide='', ng-show="user.username && !team.title", ng-submit="registerTeam(teamRegister)")
+      div(ng-show="!user.username && !team.title")
+        p
+          | You need to be logged in to create a team. You will be redirected to reddit to login.
+        p
+          a(href='/auth/reddit', class='button large') Login/Register
+      p(ng-show='!teamLoading && teamError')
+        span(class='red-copy')
+          | There was an error with your request, please try again later.
+      form(name='teamForm', data-abide='', novalidate, ng-show='user.username && !team.title', ng-submit='registerTeam(teamForm.$valid)')
         .team-name-field
           label
             | Your Team Name 
             small required
-            input(type='text', required='', ng-model='teamRegister.title')
+            input(type='text', ng-required='true', ng-model='teamRegister.title', ng-disabled='teamLoading')
           small.error Team name is required.
         .email-field
           label
             | Contact Email 
             small required
-            input(type='email', required='', ng-model='teamRegister.email')
+            input(type='email', ng-required='true', ng-model='teamRegister.email', ng-disabled='teamLoading')
           small.error An email address is required.
         .member-field
           label
             | Team Lead 
-            small required
-            input(type='text', readonly, ng-value='user.username', disabled)
+            input(type='text', readonly, ng-value='user.username', disabled, ng-required='false')
           small.error Name is required.
-        //- label
-        //-   | Choose a Category
-        //-   select
-        //-     option(value='overall') Best Overall
-        //-     option(value='mobile') Best Mobile
-        //-     option(value='internet') Best Internet of Things
-        //-     option(value='ux') Best UX
-        //-     option(value='api') Best use of an API
         label
           | Project Description
-          textarea(required, ng-model='teamRegister.description')
-        button(type='submit') Submit
-        button(type='reset') Reset
+          textarea(ng-required='true', ng-model='teamRegister.description', ng-disabled='teamLoading')
+        button(type='submit', ng-disabled='teamLoading || !teamForm.$valid') Submit
+        button(type='reset', ng-disabled='teamLoading') Reset
       h3 Date & Duration
       p The eHackathon starts:
       p
@@ -141,28 +140,30 @@ block content
       h2.landing-callout-copy Contact WkndMVP
   .row.landing-categories.cat-bkg04
     .small-12.medium-7.columns
-      form(data-abide='')
+      p(ng-show='contactLoaded && !contactError')
+        span(class='red-copy')
+          | Your request was submitted!
+      p(ng-show='contactLoaded && contactError')
+        span(class='red-copy')
+          | There was an error with your request, please try again later.
+      form(name='contactForm', data-abide='', ng-submit='sendContact(contactForm.$valid)', novalidate)
         .team-name-field
           label
             | Name 
             small required
-            input(type='text', required='', pattern='[a-zA-Z]+')
+            input(type='text', ng-required='true', ng-model='contact.name', ng-disabled='contactLoading')
           small.error Name is required.
         .email-field
           label
             | Email 
             small required
-            input(type='email', required='')
+            input(type='email', ng-required='true', ng-model='contact.email', ng-disabled='contactLoading')
           small.error An email address is required.
-        .member-field
-          label
-            | Company
-            input(type='text')
         label
           | What's up?
-          textarea
-        button(type='submit') Submit
-        button(type='reset') Reset
+          textarea(ng-required='true', ng-model='contact.message', ng-disabled='contactLoading')
+        button(type='submit', ng-disabled='contactLoading || !contactForm.$valid') Submit
+        button(type='reset', ng-disabled='contactLoading') Reset
 block scripts
     script.
       angular.module('weekendmvp.config', [])
