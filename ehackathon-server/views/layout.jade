@@ -28,7 +28,8 @@ html.no-js(lang='en')
                   |  :
                   a(href='#contact-section', data-magellan-arrival='contact-section') CONTACT
                   |  :
-                  a(href='/auth/reddit') LOGIN
+                  a(href='/auth/reddit', ng-hide="user.username") LOGIN
+                  a(href='/auth/logout', ng-show="user.username") LOGOUT
               li
                 #count-dwn-clk
                   span#count-dwn-num-01.count-dwn-num 0
