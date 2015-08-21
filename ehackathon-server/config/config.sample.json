@@ -4,7 +4,9 @@
     "redditSecret": "",
     "redditCallback": "http://localhost:3000/auth/reddit/callback",
     "sessionSecret": "",
-    "baseUrl": "localhost:3000/"
+    "baseUrl": "localhost:3000/",
+    "mandrillApiKey": "",
+    "contactEmail": ""
   },
   "test": {
     "redditKey": "",

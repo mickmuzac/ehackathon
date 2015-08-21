@@ -1,8 +1,0 @@
-extends layout
-
-block content
-  h1= title
-  form(method="post" action="/api/v1/teams/create")
-    input(type="text", name="title", placeholder="Title")
-    textarea(name="description", placeholder="Description")
-    button(type="submit") Submit
