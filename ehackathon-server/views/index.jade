@@ -49,6 +49,8 @@ block content
               | (Moderator)
           li(ng-show="user._id === team.ownerId")
             invite
+          li(ng-show="user._id != team.ownerId")
+            button(ng-hide="inviteUrl || loading" ng-click="promptToLeave()") Leave Team
 
 
       div(ng-show="!user.username && !team.title")

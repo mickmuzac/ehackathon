@@ -21,7 +21,7 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
     } else {
       $scope.teamError = false;
     }
-    
+
   }
 
   $scope.sendContact = function(isValid) {
@@ -39,9 +39,22 @@ app.controller("BaseController", ['$scope', '$http', 'weekendMVPConfig', functio
           $scope.contactLoading = false;
           $scope.contactLoaded = true;
           $scope.contactError = true;
-        })  
+        })
     } else {
       $scope.contactError = true;
+    }
+  }
+
+  $scope.promptToLeave = function(){
+    var isLeaving = window.confirm("Leave this team? This cannot be undone. You must be reinvited to rejoin the team.");
+    if(isLeaving){
+      $scope.loading = true;
+      $http.delete('/api/v1/teams/leave/' + $scope.team._id)
+        .success(function(doc) {
+          $scope.loading = false
+          $scope.team = {};
+          $scope.team.fullMembers = {};
+        });
     }
   }
 }]);
