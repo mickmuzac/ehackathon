@@ -9548,6 +9548,7 @@ h1, h2, h3, h4, h5 {
   background-color: #00ffff;
   background-image: url("../imgs/blue-group-stickies.jpg");
   padding: 2.75rem;
+  background-size: 100% auto;
 }
 
 /* line 97, ../scss/app.scss */
