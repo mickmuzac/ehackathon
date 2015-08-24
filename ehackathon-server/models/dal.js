@@ -69,6 +69,11 @@ exports.findTeamMembers = function(teamId, cb) {
   });
 }
 
+exports.removeUserFromTeam = function(teamId, userId, cb) {
+
+  Team.update({ _id: teamId }, { $pull: { 'members': userId } }, cb);
+}
+
 /*
   Teams
 */

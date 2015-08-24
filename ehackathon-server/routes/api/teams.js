@@ -58,6 +58,21 @@ router.delete('/teams/:id', ensureAuthenticated, function(req, res, next) {
   });
 });
 
+router.delete('/teams/leave/:teamId', ensureAuthenticated, function(req, res, next) {
+  dal.findTeamsByMemberId(req.user._id, function(err, docs) {
+    var doc = docs[0];
+
+    if(err) res.send(500);
+    else if(!doc || doc._id != req.params.teamId) res.send(403);
+    else {
+      dal.removeUserFromTeam(doc._id, req.user._id, function(err) {
+        if(err) res.send(500);
+        else res.send(204);
+      });
+    }
+  });
+});
+
 router.get('/teams/invite/code', ensureAuthenticated, function(req, res, next) {
   var team = dal.findTeamByOwnerId(req.user._id, function(err, doc) {
     if(doc !== null) {
