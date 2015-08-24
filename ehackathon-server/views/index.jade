@@ -166,11 +166,3 @@ block content
           textarea(ng-required='true', ng-model='contact.message', ng-disabled='contactLoading')
         button(type='submit', ng-disabled='contactLoading || !contactForm.$valid') Submit
         button(type='reset', ng-disabled='contactLoading') Reset
-block scripts
-    script.
-      angular.module('weekendmvp.config', [])
-        .constant('weekendMVPConfig', {
-          currentUser: !{JSON.stringify(user)},
-          currentUserTeam: !{JSON.stringify(team)},
-          currentUserTeamMembers: !{JSON.stringify(teamMembers)}
-        });

@@ -4,9 +4,9 @@ html.no-js(lang='en')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title WkndMVP
-    link(rel='stylesheet', href='stylesheets/app.css')
-    link(rel='stylesheet', href='stylesheets/flipclock.css')
-    script(src='bower_components/modernizr/modernizr.js')
+    link(rel='stylesheet', href='/stylesheets/app.css')
+    link(rel='stylesheet', href='/stylesheets/flipclock.css')
+    script(src='/bower_components/modernizr/modernizr.js')
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js')
   body(ng-app="weekendmvp")
     div(ng-controller='BaseController')
@@ -39,13 +39,20 @@ html.no-js(lang='en')
             ul.left
               li
                 a(href='#start')
-                  img.wknd-logo(src='imgs/wknd-logo-small.png')
+                  img.wknd-logo(src='/imgs/wknd-logo-small.png')
       block content
     
-    script(src='bower_components/jquery/dist/jquery.min.js')
-    script(src='bower_components/foundation/js/foundation.min.js')
-    script(src='bower_components/foundation/js/foundation/foundation.magellan.js')
-    script(src='js/flipclock.min.js')
-    script(src='js/workingmodel.js')
-    script(src='js/app.js')
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/foundation/js/foundation.min.js')
+    script(src='/bower_components/foundation/js/foundation/foundation.magellan.js')
+    script(src='/js/flipclock.min.js')
+    script(src='/js/workingmodel.js')
+    script(src='/js/app.js')
     block scripts
+    script.
+      angular.module('weekendmvp.config', [])
+        .constant('weekendMVPConfig', {
+          currentUser: !{JSON.stringify(user || {})},
+          currentUserTeam: !{JSON.stringify(team || {})},
+          currentUserTeamMembers: !{JSON.stringify(teamMembers || {})}
+        });

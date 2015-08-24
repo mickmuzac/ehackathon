@@ -91,12 +91,14 @@ router.get('/teams/invite/code', ensureAuthenticated, function(req, res, next) {
 
 router.get('/teams/invite/redeem/:codeId', ensureAuthenticated, function(req, res, next) {
   //TODO: Add validation(does user already belong to/own team etc..., clean up the nestedness
-  var code = dal.findInviteById(req.query.codeId, function(err, doc) {
+  if(!req.params.codeId) return res.send(400);
+
+  dal.findInviteById(req.params.codeId, function(err, doc) {
     if(err === null && doc !== null) {
 
       dal.addUserToTeam(doc.teamId, req.user._id, function(err, doc) {
         if(err === null) {
-          dal.deleteTeamInvite(req.query.codeId, function(err) {
+          dal.deleteTeamInvite(req.params.codeId, function(err) {
             if(err === null) {
               res.redirect('/');
             } else {
