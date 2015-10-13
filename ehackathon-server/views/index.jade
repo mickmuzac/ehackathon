@@ -6,10 +6,10 @@ block content
         h1 Join the WkndMVP eHackathon
         h2
           | Hacking starts: 
-          span.red-copy Thurs Aug 27 @ 12:00 PST
+          span.red-copy Thurs Oct 22 @ 12:00 PST
         h3 Register your team today
         .countdown-timer
-        a.button.large(href='#ehackathon-section', ng-hide='user.username') Register Now
+        a.button.large(href='/auth/reddit', ng-hide='user.username') Register Now
         h3(ng-show='user.username')
           | Welcome 
           span(class='red-copy')
@@ -29,10 +29,10 @@ block content
     .small-12.medium-7.columns
       h3 How to Participate 
       ol
-        li Find teammates in the /weekendMVP subreddit
+        li Find teammates in the r/weekendMVP subreddit
         li
           | Register your team before 
-          span.red-copy.bold-copy Thurs Aug 27 @ 12:00 PST
+          span.red-copy.bold-copy Thurs Oct 22 @ 12:00 PST
           | .
       h3 Team Registration
       div(ng-show="user.username && team.title")
@@ -47,10 +47,10 @@ block content
             | {{::member.username}} 
             span(ng-show="member._id === team.ownerId")
               | (Moderator)
-          li(ng-show="user._id === team.ownerId")
-            invite
-          li(ng-show="user._id != team.ownerId")
-            button(ng-hide="inviteUrl || loading" ng-click="promptToLeave()") Leave Team
+        div(ng-show="user._id === team.ownerId")
+          invite
+        div(ng-show="user._id != team.ownerId")
+          button(ng-hide="inviteUrl || loading" ng-click="promptToLeave()") Leave Team
 
 
       div(ng-show="!user.username && !team.title")
@@ -87,48 +87,22 @@ block content
       h3 Date & Duration
       p The eHackathon starts:
       p
-      p.red-copy.bold-copy Thurs Aug 27 @ 12:00 PST & runs until Sun, Aug 30 @ 23:59 PST
+      p.red-copy.bold-copy Thurs Oct 22 @ 12:00 PST & runs until Sun, Oct 25 @ 23:59 PST
       p
         | Submission must be entered online no later than 
-        span.red-copy.bold-copy Sun, Aug 30 @ 23:59 PST
+        span.red-copy.bold-copy Sun, Oct 25 @ 23:59 PST
         | .
       h3 Submission
       p
         | Team leaders log in at wkndmvp.com and submit your team project before the deadline 
-        span.red-copy.bold-copy Sun, Aug 30 @ 23:59 PST.
+        span.red-copy.bold-copy Sun, Oct 25 @ 23:59 PST.
       h3 Voting
       ol
-        li
-          | After the eHackathon deadline Community reviews submissions & choose best of or 1/2/3 for each category.
-        li 1 week for community to vote
-        li Voters sign in with reddit to cast vote, 1 vote per username per category? 
+        li Voting will remain open for 1 week after the end of the eHackathon
+        li Voters must sign in with reddit to cast vote; 1 vote per username
         li Voters cannot vote on their own project
         li Account must be 1 week old from the start of hackathon
-        li Account must belong to r startups subreddit
-    .small-8.medium-6.columns
-      h3 Categories
-      p
-        | Below is a list of the categories to inspire your ideas. If our community is able to gain enough traction that we attract sponsors for the WkndMVP eHackathon, we hope to provide prizes for the following categories. At minimum, your team could win all the fame, glory and bragging rights for the categories below.
-      p Voting will open after the eHackathon deadline on Sun, Aug 30 @ 23:59 PST. 
-      p
-        | Voting is open to members of the r/startups Reddit community. Login on Mon, Aug 31 to cast your vote for the best of the best in each category.
-    .small-8.medium-6.columns
-      ul.category-list
-        li
-          img(src='imgs/blue-3dpolybox.png')
-          |  Best Overall
-        li
-          img(src='imgs/red-3dpolybox.png')
-          |  Best Mobile
-        li
-          img(src='imgs/blue-3dpolybox.png')
-          |  Best Internet of Things
-        li
-          img(src='imgs/red-3dpolybox.png')
-          |  Best UX
-        li
-          img(src='imgs/blue-3dpolybox.png')
-          |  Best use of an API
+        li Account must be subscribed to r/startups or r/wkndmvp subreddit
   #showcase-section.row.landing-callout(data-magellan-destination='showcase-section')
     .small-12.columns
       h2.landing-callout-copy Showcase
@@ -136,7 +110,7 @@ block content
     .small-12.medium-7.columns
       h3 Coming soon!
       p
-        | Check back on August 31, 2015 to cast your vote for the best projects in each category.
+        | Check back on October 26, 2015 to cast your vote for the best projects in each category.
   #contact-section.row.landing-callout(data-magellan-destination='contact-section')
     .small-12.columns
       h2.landing-callout-copy Contact WkndMVP
@@ -148,7 +122,7 @@ block content
       p(ng-show='contactLoaded && contactError')
         span(class='red-copy')
           | There was an error with your request, please try again later.
-      form(name='contactForm', data-abide='', ng-submit='sendContact(contactForm.$valid)', novalidate, ng-hide='contactLoaded && !contactError')
+      form.contactForm(name='contactForm', data-abide='', ng-submit='sendContact(contactForm.$valid)', novalidate, ng-hide='contactLoaded && !contactError')
         .team-name-field
           label
             | Name 
@@ -165,4 +139,4 @@ block content
           | What's up?
           textarea(ng-required='true', ng-model='contact.message', ng-disabled='contactLoading')
         button(type='submit', ng-disabled='contactLoading || !contactForm.$valid') Submit
-        button(type='reset', ng-disabled='contactLoading') Reset
+        button(type='reset', ng-disabled='contactLoading', style="margin-left: 25px;") Reset
